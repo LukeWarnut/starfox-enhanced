@@ -48,10 +48,12 @@ add_library(retro_cpu_core STATIC
     "${retro_cpu_SOURCE_DIR}/cpu.cc"
 )
 target_include_directories(retro_cpu_core SYSTEM PUBLIC "${retro_cpu_SOURCE_DIR}")
+target_compile_features(retro_cpu_core PUBLIC cxx_std_20)
 add_library(retro_cpu_65816 STATIC
     "${retro_cpu_SOURCE_DIR}/cpu/65816/cpu_65c816.cc"
 )
 target_include_directories(retro_cpu_65816 SYSTEM PUBLIC "${retro_cpu_SOURCE_DIR}")
+target_compile_features(retro_cpu_65816 PUBLIC cxx_std_20)
 target_link_libraries(retro_cpu_65816 PUBLIC retro_cpu_core)
 if(MINGW)
     target_compile_definitions(retro_cpu_core PUBLIC __FUNCSIG__=__PRETTY_FUNCTION__)

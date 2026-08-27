@@ -1,6 +1,6 @@
 # Star Fox Enhanced
 
-A native Windows PC port of the open-source
+A native PC port of the open-source
 [UltraStarFox](https://github.com/Sunlitspace542/ultrastarfox) codebase. It
 presents at a selectable 20, 30, 60, 120, 240, or 360 frames per second while
 preserving the original game's intended NTSC simulation speed and assembled
@@ -74,6 +74,39 @@ The Windows build embeds those inputs by default. Explicit external files can
 still be passed to the executable for development and source-to-port
 comparisons.
 
+## Quick start (macOS)
+
+There is no prebuilt macOS app in `dist/StarFoxEnhanced`. Compile from source
+with Homebrew and the Xcode command-line tools:
+
+```bash
+xcode-select --install
+brew install cmake ninja dosbox-x
+```
+
+Build the pinned UltraStarFox source so these local inputs exist:
+
+```text
+upstream-ultrastarfox/SF.SFC
+upstream-ultrastarfox/SYMBOLS.TXT
+```
+
+Then run:
+
+```bash
+./play-starfox.sh
+```
+
+The launcher configures an optimized build on first use and starts at the
+title screen. A development map can be selected explicitly:
+
+```bash
+./play-starfox.sh LEVEL1_1
+```
+
+macOS builds do not embed ROM or symbol data. `play-starfox.sh` always passes
+the assembled UltraStarFox files to `starfox_pc`.
+
 ## UltraStarFox source setup
 
 The required revision is pinned in `config/upstream.json`:
@@ -84,8 +117,16 @@ git -C upstream-ultrastarfox checkout 270e959a47d82240d9290a6c6630032c9ec53ff5
 powershell -ExecutionPolicy Bypass -File tools/build_upstream.ps1
 ```
 
-The UltraStarFox DOSBox assembler toolchain must be present in that checkout,
-as described by its own build instructions.
+```bash
+git clone https://github.com/Sunlitspace542/ultrastarfox.git upstream-ultrastarfox
+git -C upstream-ultrastarfox checkout 270e959a47d82240d9290a6c6630032c9ec53ff5
+./tools/build_upstream.sh
+```
+
+The Windows script uses the `dosbox-x.exe` toolchain from that checkout. On
+macOS, install a native DOSBox-X instead (`brew install dosbox-x`, or set
+`DOSBOX_X` to another binary). UltraStarFox's own build instructions cover
+the assembler environment.
 
 ## Build and test
 
@@ -94,6 +135,8 @@ cmake -S . -B build/release -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build build/release -j 8
 ctest --test-dir build/release --output-on-failure
 ```
+
+These CMake commands are the same on Windows and macOS.
 
 Create a portable executable folder (ROM data remains user-supplied):
 
@@ -107,6 +150,12 @@ You can launch the binary directly:
 build/release/starfox_pc.exe
 build/release/starfox_pc.exe LEVEL2_3
 build/release/starfox_pc.exe path/to/SF.SFC path/to/SYMBOLS.TXT TITLEMAP
+```
+
+```bash
+build/release/starfox_pc
+build/release/starfox_pc LEVEL2_3
+build/release/starfox_pc path/to/SF.SFC path/to/SYMBOLS.TXT TITLEMAP
 ```
 
 ## Controls
