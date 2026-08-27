@@ -132,13 +132,13 @@ the assembler environment.
 
 ## Build and test
 
+These CMake commands are the same on Windows and macOS.
+
 ```powershell
 cmake -S . -B build/release -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build build/release -j 8
 ctest --test-dir build/release --output-on-failure
 ```
-
-These CMake commands are the same on Windows and macOS.
 
 Create a portable executable folder (ROM data remains user-supplied):
 
