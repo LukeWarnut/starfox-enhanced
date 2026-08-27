@@ -111,12 +111,14 @@ the assembled UltraStarFox files to `starfox_pc`.
 
 The required revision is pinned in `config/upstream.json`:
 
+Windows:
 ```powershell
 git clone https://github.com/Sunlitspace542/ultrastarfox.git upstream-ultrastarfox
 git -C upstream-ultrastarfox checkout 270e959a47d82240d9290a6c6630032c9ec53ff5
 powershell -ExecutionPolicy Bypass -File tools/build_upstream.ps1
 ```
 
+macOS:
 ```bash
 git clone https://github.com/Sunlitspace542/ultrastarfox.git upstream-ultrastarfox
 git -C upstream-ultrastarfox checkout 270e959a47d82240d9290a6c6630032c9ec53ff5
